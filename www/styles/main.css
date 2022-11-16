@@ -1,0 +1,58 @@
+#clearButton{
+    gap: 40px;
+    margin: 20px;
+}
+
+#findText{
+    font-size: 20px;
+}
+
+
+#myUL{
+    overflow: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#myUL li a {
+    border: 1px solid #ddd; 
+    margin-top: -1px; 
+    background-color: #f6f6f6; 
+    padding: 12px; 
+    text-decoration: none; 
+    font-size: 18px; 
+    color: #1A2238; 
+    display: block; 
+}
+
+  #myUL li a:hover:not(.header) {
+    /*Added a hover effect for some visual interest*/
+    color: #9DAAF2;
+    background-color: #eee; 
+}
+
+#searchField {
+    font-size: 16px; 
+    padding: 10px 20px 10px 0px; 
+    border: 1px solid #ddd; 
+    margin-bottom: 12px; 
+}
+
+h2 {
+    color: #FF6A3D;
+    font-family: 'Lora', serif;
+}
+
+h5 {
+    color: #F4DB7D;
+    font-family: 'Lato', sans-serif;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    background-color: #1A2238;
+}

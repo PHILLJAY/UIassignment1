@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Lora&display=swap" rel="stylesheet"> 
+</head>
+
+<body>
+    <h2> Welcome to User Interfaces Assignment 1</h2>
+    <h5 id="demo">Below is a filter for words-small.json</p>
+
+    <div>
+        <label id="findText">Find:</label>
+        <input type="search" id="filterBox" placeholder="filter..." onkeyup="filter()">
+        <input type="reset" id="clearBtn" value="Clear"
+            onclick="document.getElementById('filterBox').value = ''; filter()">
+    </div>
+
+    <label id="listLabel"></label>
+
+    <div class="list">
+        <ul id="myUL"></ul>
+    </div>
+    
+</body>
+
+
+<script>
+    window.onload = populateList();
+    ele = document.getElementById("myUL");
+    input = document.getElementById('filterBox');
+    total = 0;
+    counter = 0;
+
+    //quick and dirty code to resize elements based on screen size
+    window.onresize = function(event) {
+        h = window.innerHeight;
+        w = window.innerWidth;
+        document.getElementById("myUL").style.height = h-200 + 'px';
+        document.getElementById("filterBox").style.width = w-200 + 'px';
+    }
+
+    //populate the list with everything in the json
+    function populateList() {
+
+        // XMLHttpRequest with a get method created
+        var xhr = new XMLHttpRequest(),
+            method = 'GET',
+            overrideMimeType = 'application/json',
+            url = 'words-small.json';        
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+                // JSON data is parsed here
+                let words = JSON.parse(xhr.responseText);
+                total = words.length;
+                counter = words.length;
+                update();//update the label 
+
+                for (let i = 0; i < words.length; i++) {
+                    // Data is then added to the list
+                    ele.innerHTML = ele.innerHTML + '<li><a href="#">' + words[i] + '</a></li>';
+                }
+            }
+        };
+        xhr.open(method, url, true);
+        xhr.send();
+    }
+
+    //change the results according to the filter field
+    function filter() {
+        // Declarations
+        var filter, li, a, i, txtValue;
+        filter = input.value.toUpperCase();
+        li = ele.getElementsByTagName('li');
+
+        counter = 0;//reset counter
+
+        // Loop through all list items, and hide those who don't match the filter query
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+                counter++;
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+        update();
+    }
+
+    //update the label
+    function update() {
+
+        if (counter == total) {
+            document.getElementById('listLabel').innerHTML = total + " words total in list";
+        }
+        else if (counter == 0) {
+            document.getElementById('listLabel').innerHTML = "no results";
+        }
+        else {
+            document.getElementById('listLabel').innerHTML = counter + ' words containing "' + input.value + '"';
+        }
+
+
+    }
+
+</script>
+
+</html>
